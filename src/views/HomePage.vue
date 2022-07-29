@@ -3,7 +3,9 @@
     <img src="../assets/images/logo-2.png" alt="logo">
     <div class="home__buttons-wrapper hidden">
       <div>
-        <button>Доставка</button>
+        <router-link to="/showcase">
+          <button>Доставка</button>
+        </router-link>
         <button>Бронь места</button>
         <button>Войти</button>
       </div>
@@ -14,25 +16,27 @@
 <script>
 export default {
   name: "HomePage",
-  methods: {
+  mounted() {
+    console.log('mounted');
 
-  }
+    const
+        logo = document.querySelector('img'),
+        homeButtonsWrapper = document.querySelector('.home__buttons-wrapper');
+
+    setTimeout( () => {
+      logo.style.opacity = '1';
+      logo.style.width = '30%';
+      logo.style.top = '30px';
+      logo.style.marginTop = '30px';
+
+      homeButtonsWrapper.style.visibility = 'visible';
+      homeButtonsWrapper.style.opacity = '1';
+      homeButtonsWrapper.style.bottom = '10%';
+    }, 0)
+
+  },
+  methods: {}
 }
-
-window.addEventListener("load", function() {
-  const
-      logo = document.querySelector('img'),
-      homeButtonsWrapper = document.querySelector('.home__buttons-wrapper');
-
-  logo.style.opacity = '1';
-  logo.style.width = '30%';
-  logo.style.top = '30px';
-  logo.style.marginTop = '30px';
-
-  homeButtonsWrapper.style.visibility = 'visible';
-  homeButtonsWrapper.style.opacity = '1';
-  homeButtonsWrapper.style.bottom = '10%';
-});
 </script>
 
 <style scoped>
