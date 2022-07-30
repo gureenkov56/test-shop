@@ -2,12 +2,13 @@
   <div>
     <HeaderPart/>
     <div class="shocasePage__wrapper">
-      <div class="notice">
+
+      <div class="notice" :class="{'hide': showNotice}">
         <div class="notice__inner">
           <h5>Регистрируйся!</h5>
           <p>Всем новым пользователям даём по е-баллу</p>
         </div>
-        <button @click="hideParentElement">×</button>
+        <button @click="closeNotice">×</button>
       </div>
 
       <div class="products-wrapper">
@@ -24,17 +25,36 @@
 import HeaderPart from "@/views/parts/HeaderPart";
 import ShowcaseProduct from "@/components/ShowcaseProduct";
 import FooterPart from "@/views/parts/FooterPart";
+import { mapState, mapMutations } from 'vuex';
 
 export default {
   name: "ShowcasePage",
-
   components: {
     HeaderPart, ShowcaseProduct,
     FooterPart
   },
+  data() {
+    return {
+      test: ''
+    }
+  },
+  computed: {
+    ...mapState({
+      showNotice: 'noticeOnShowCaseWasClosed'
+    }),
+
+  },
   methods: {
-    hideParentElement($event) {
-      $event.target.parentElement.classList.add('hide');
+    ...mapMutations(['closeNoticeOnShowcase']),
+
+    closeNotice() {
+      this.closeNoticeOnShowcase();
+      sessionStorage.setItem('showcaseNoticeWasClosed', 'yes');
+    }
+  },
+  mounted() {
+    if (sessionStorage.getItem('showcaseNoticeWasClosed')) {
+      this.closeNotice();
     }
   }
 }
