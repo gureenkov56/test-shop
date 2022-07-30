@@ -58,4 +58,48 @@ a {
   text-transform: uppercase;
 }
 
+.notice {
+  background-color: #40a823;
+  color: white;
+  max-width: 400px;
+  margin: 10px auto;
+  border: 2px solid white;
+  overflow: hidden;
+  position: relative;
+
+  max-height: 250px;
+
+  transition: max-height .5s 0s,
+              max-width .5s .5s,
+              opacity .5s .5s;
+}
+
+.notice__inner {
+  padding: 20px;
+}
+
+.notice__inner > h5,
+.notice__inner > p {
+  margin: 0;
+}
+
+.notice > button {
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 2rem;
+  width: 46px;
+  cursor: pointer;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.notice.hide {
+  max-height: 0;
+  max-width: 0;
+  opacity: 0;
+}
+
 </style>
