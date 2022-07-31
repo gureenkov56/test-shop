@@ -11,7 +11,10 @@
         <button @click="closeNotice">×</button>
       </div>
 
-      <div class="products-wrapper">
+      <p v-if="!products.length" class="loading" ref="loading">
+        Загрузка
+      </p>
+      <div v-else class="products-wrapper">
         <ShowcaseProduct v-for="(name, index) in [1,2,1,1,1]" :key="index"/>
       </div>
     </div>
@@ -25,7 +28,7 @@
 import HeaderPart from "@/views/parts/HeaderPart";
 import ShowcaseProduct from "@/components/ShowcaseProduct";
 import FooterPart from "@/views/parts/FooterPart";
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapMutations, mapActions } from 'vuex';
 
 export default {
   name: "ShowcasePage",
@@ -35,28 +38,31 @@ export default {
   },
   data() {
     return {
-      test: ''
     }
   },
   computed: {
     ...mapState({
-      showNotice: 'noticeOnShowCaseWasClosed'
+      showNotice: 'noticeOnShowCaseWasClosed',
+      products: 'products'
     }),
-
   },
   methods: {
-    ...mapMutations(['closeNoticeOnShowcase']),
+    ...mapMutations(['CLOSE_NOTICE_SHOWCASE']),
+    ...mapActions(['getProducts']),
 
     closeNotice() {
-      this.closeNoticeOnShowcase();
+      this.CLOSE_NOTICE_SHOWCASE();
       sessionStorage.setItem('showcaseNoticeWasClosed', 'yes');
     }
+  },
+  created() {
+    this.getProducts()
   },
   mounted() {
     if (sessionStorage.getItem('showcaseNoticeWasClosed')) {
       this.closeNotice();
     }
-  }
+  },
 }
 </script>
 
@@ -71,6 +77,18 @@ export default {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
+}
+
+.loading {
+  animation: loadingAnimate 2s infinite linear;
+}
+
+@keyframes loadingAnimate {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+
 }
 
 

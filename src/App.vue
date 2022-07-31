@@ -7,10 +7,8 @@
 </template>
 
 <script>
-
-import HomePage from "@/views/HomePage";
 export default {
-  components: {HomePage}
+
 }
 </script>
 
@@ -39,6 +37,10 @@ html, body {
 
 .d-none {
   display: none;
+}
+
+.opacity-0 {
+  opacity: 0;
 }
 
 .hidden {
@@ -100,6 +102,13 @@ a {
   max-height: 0;
   max-width: 0;
   opacity: 0;
+}
+
+.loading {
+  text-align: center;
+  color: white;
+  height: 300px;
+  line-height: 300px;
 }
 
 </style>

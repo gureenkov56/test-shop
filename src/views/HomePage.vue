@@ -17,6 +17,7 @@
 <script>
 export default {
   name: "HomePage",
+
   mounted() {
     const
         logo = document.getElementById('homeLogo'),
