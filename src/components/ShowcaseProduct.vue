@@ -1,13 +1,13 @@
 <template>
   <div class="product">
     <div class="product__img-wrapper">
-      <img src="@/assets/images/products/burger-beef/burger-1floor.png" alt="burger" class="burger-title-image">
+      <img :src="getPathToImage(product.image)" alt="burger" class="burger-title-image">
     </div>
-    <button class="btn">BUY $10</button>
+    <button class="btn">BUY ${{ product.price }}</button>
 
-    <h3>Роял-бургер</h3>
+    <h3>{{ product.name }}</h3>
 
-    <p class="description">Кратко и забавно о бургере</p>
+    <p class="description">{{ product.shortDescription }}</p>
 
 
 
@@ -17,7 +17,12 @@
 <script>
 export default {
   name: "ShowcaseProduct",
-
+  props: ['product'],
+  methods: {
+    getPathToImage(image) {
+      return require(`../assets/images/products/${image}`)
+    }
+  },
 }
 </script>
 

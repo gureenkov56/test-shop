@@ -11,12 +11,19 @@
         <button @click="closeNotice">×</button>
       </div>
 
-      <p v-if="!products.length" class="loading" ref="loading">
-        Загрузка
-      </p>
-      <div v-else class="products-wrapper">
-        <ShowcaseProduct v-for="(name, index) in [1,2,1,1,1]" :key="index"/>
-      </div>
+      <transition name="fade" mode="out-in">
+        <p v-if="!products.length" class="loading" ref="loading">
+          Загрузка
+        </p>
+        <div v-else class="products-wrapper">
+          <ShowcaseProduct v-for="index in products"
+                           :key="index"
+                           :product="index"
+          />
+        </div>
+      </transition>
+
+
     </div>
 
     <FooterPart/>
@@ -28,7 +35,7 @@
 import HeaderPart from "@/views/parts/HeaderPart";
 import ShowcaseProduct from "@/components/ShowcaseProduct";
 import FooterPart from "@/views/parts/FooterPart";
-import { mapState, mapMutations, mapActions } from 'vuex';
+import {mapState, mapMutations, mapActions} from 'vuex';
 
 export default {
   name: "ShowcasePage",
@@ -37,8 +44,7 @@ export default {
     FooterPart
   },
   data() {
-    return {
-    }
+    return {}
   },
   computed: {
     ...mapState({
@@ -73,6 +79,7 @@ export default {
   margin: 20px auto 80px auto;
   padding: 0 10px;
 }
+
 .products-wrapper {
   display: flex;
   justify-content: space-around;
@@ -84,14 +91,20 @@ export default {
 }
 
 @keyframes loadingAnimate {
-  0% { opacity: 0; }
-  20% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 
 }
-
-
 
 
 </style>
