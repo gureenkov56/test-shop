@@ -235,7 +235,7 @@ function getProducts() {
       name: 'Sprite',
       price: '2',
       image: 'drinks/sprite-500.png',
-      shortDescription: 'Как у дедушки в деревне лимончелло',
+      shortDescription: 'Как лимончелло у дедушки в деревне',
       description: 'description',
       count: 1,
       canPayForEBalls: false,
