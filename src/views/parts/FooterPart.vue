@@ -7,7 +7,7 @@
         </div>
       </router-link>
       <div>
-        ЗАКАЗ: $0
+        ЗАКАЗ: ${{totalCartPrice}}
       </div>
       <div>
         <img src="@/assets/images/svg/user.svg" alt="user">
@@ -17,8 +17,13 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
-  name: "FooterPart"
+  name: "FooterPart",
+  computed: {
+    ...mapGetters(['totalCartPrice'])
+  }
 }
 </script>
 

@@ -16,9 +16,10 @@
           Загрузка
         </p>
         <div v-else class="products-wrapper">
-          <ShowcaseProduct v-for="index in products"
-                           :key="index"
-                           :product="index"
+          <ShowcaseProduct v-for="(product, idx) in products"
+                           :key="idx"
+                           :index="idx"
+                           :product="product"
           />
         </div>
       </transition>
