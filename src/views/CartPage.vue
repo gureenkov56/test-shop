@@ -128,6 +128,7 @@ export default {
 
 .description {
   color: #444444;
+  margin-right: 3rem;
 }
 
 .count-wrapper {
@@ -139,6 +140,10 @@ export default {
     flex-direction: column;
     align-items: center;
     text-align: center;
+  }
+
+  .description {
+    margin-right: 0;
   }
 }
 </style>
