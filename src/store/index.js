@@ -8,7 +8,7 @@ function getProducts() {
       price: '4',
       image: 'burger-beef/burger-1floor.png',
       shortDescription: 'Миникупер в мире бургеров',
-      description: 'description',
+      description: 'Мягкая булочка разогрета в микроволновке, да, но котлета то сделана с любовью. За это мы его и любим.',
       count: 1,
       canPayForEBalls: true,
       category: 'Beef',
@@ -260,7 +260,7 @@ export default createStore({
     inCart: []
   },
   getters: {
-    isProductInCart: state => id => {
+    productInCart: state => id => {
       return state.inCart.filter(el => el.id === id);
     },
     totalCartPrice: state => {
@@ -269,7 +269,6 @@ export default createStore({
       } else {
         return 0;
       }
-
     }
   },
   mutations: {
@@ -281,7 +280,6 @@ export default createStore({
     },
     ADD_PRODUCT_TO_CART(state, product) {
       let search = state.inCart.filter(el => el.id === product.id);
-      console.log(search);
       if (search.length) {
         search[0].count++;
       } else {

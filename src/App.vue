@@ -25,6 +25,10 @@ html, body {
   font-family: 'Montserrat', sans-serif;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  color: #EA983C;
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: all .3s ease;
@@ -83,6 +87,7 @@ a {
 .notice__inner > h5,
 .notice__inner > p {
   margin: 0;
+  color: white;
 }
 
 .notice > button {

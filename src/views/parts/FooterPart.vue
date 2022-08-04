@@ -7,7 +7,9 @@
         </div>
       </router-link>
       <div>
-        ЗАКАЗ: ${{totalCartPrice}}
+        <router-link to="/cart">
+          ЗАКАЗ: ${{totalCartPrice}}
+        </router-link>
       </div>
       <div>
         <img src="@/assets/images/svg/user.svg" alt="user">
@@ -51,5 +53,9 @@ footer {
   padding-top: 18px;
   margin: 5px;
   vertical-align: center;
+}
+
+a {
+  color: white;
 }
 </style>

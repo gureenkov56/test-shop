@@ -6,30 +6,18 @@
 
     <button
         class="btn"
-        v-show="!isProductInCart(product.id).length"
+        v-if="!productInCart(product.id).length"
         @click="addProduct(product)">
       BUY ${{ product.price }}
     </button>
 
-    <div
-        class="count-wrapper"
-        v-show="isProductInCart(product.id).length"
-    >
-      <button class="btn-math" @click="minusCount(product.id)">-</button>
+    <plusMinusPart
+        v-else
+        :product="product"
+        @minusCount="minusCount"
+        @plusCount="plusCount"
+    />
 
-      <span
-          v-if="!isProductInCart(product.id).length"
-          class="math"
-      >${{ product.price }} х 0
-      </span>
-      <span
-          v-else
-          class="math"
-      >${{ product.price }} х {{ isProductInCart(product.id)[0].count }}
-      </span>
-
-      <button class="btn-math" @click="plusCount(product.id)">+</button>
-    </div>
 
     <h3>{{ product.name }}</h3>
 
@@ -41,9 +29,11 @@
 
 <script>
 import {mapMutations, mapGetters} from "vuex";
+import plusMinusPart from "@/views/parts/plusMinusPart";
 
 export default {
   name: "ShowcaseProduct",
+  components: {plusMinusPart},
   props: ['product', 'index'],
   methods: {
     ...mapMutations(['ADD_PRODUCT_TO_CART', 'MINUS_COUNT_IN_CART', 'PLUS_COUNT_IN_CART']),
@@ -58,10 +48,10 @@ export default {
 
     plusCount(id) {
       this.PLUS_COUNT_IN_CART(id)
-    }
+    },
   },
   computed: {
-    ...mapGetters(['isProductInCart']),
+    ...mapGetters(['productInCart']),
 
   }
 }
@@ -85,7 +75,6 @@ export default {
 }
 
 h3 {
-  color: #EA983C;
   margin-bottom: 5px;
   margin-top: 3px;
 }
@@ -103,29 +92,10 @@ button {
 }
 
 .count-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: 2px solid white;
-  background-color: black;
-  max-width: 150px;
   margin: 0 auto;
-  z-index: 2;
 }
 
-.math {
-  flex: 1;
-  color: white;
-}
 
-.btn-math {
-  background-color: black;
-  color: white;
-  height: 2rem;
-  width: 2rem;
-  border: none;
-  cursor: pointer;
-}
 
 
 </style>
