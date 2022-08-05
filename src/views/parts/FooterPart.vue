@@ -1,11 +1,9 @@
 <template>
   <footer>
     <div class="footer__wrapper">
-      <router-link to="/">
-        <div>
+      <button class="backBtn" @click="$router.back()">
           <img src="@/assets/images/svg/arrow-left.svg" alt="arrow-back">
-        </div>
-      </router-link>
+      </button>
       <div>
         <router-link to="/cart">
           ЗАКАЗ: ${{totalCartPrice}}
@@ -25,7 +23,7 @@ export default {
   name: "FooterPart",
   computed: {
     ...mapGetters(['totalCartPrice'])
-  }
+  },
 }
 </script>
 
@@ -57,5 +55,11 @@ footer {
 
 a {
   color: white;
+}
+
+.backBtn {
+  background-color: #000;
+  border: none;
+  cursor: pointer;
 }
 </style>
