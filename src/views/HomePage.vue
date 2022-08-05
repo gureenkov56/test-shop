@@ -1,11 +1,14 @@
 <template>
   <div class="home">
-    <img src="../assets/images/logo-2.png" alt="logo">
-    <div class="home__buttons-wrapper hidden">
+    <img src="@/assets/images/logo-2.png" alt="logo" id="homeLogo">
+
+    <div class="home__buttons-wrapper hidden" ref="buttonWrapper">
       <div>
-        <button>Доставка</button>
-        <button>Бронь места</button>
-        <button>Войти</button>
+        <router-link to="/showcase">
+          <button class="btn">Заказать</button>
+        </router-link>
+        <button class="btn">Бронь места</button>
+        <button class="btn">Войти</button>
       </div>
     </div>
   </div>
@@ -14,25 +17,27 @@
 <script>
 export default {
   name: "HomePage",
-  methods: {
 
-  }
+  mounted() {
+    const
+        logo = document.getElementById('homeLogo'),
+        homeButtonsWrapper = this.$refs.buttonWrapper;
+
+
+    setTimeout( () => {
+      logo.style.width = '30%';
+      logo.style.top = '30px';
+      logo.style.marginTop = '30px';
+      // logo.style.opacity = '1';
+
+      homeButtonsWrapper.style.visibility = 'visible';
+      homeButtonsWrapper.style.opacity = '1';
+      homeButtonsWrapper.style.bottom = '10%';
+    }, 0)
+
+  },
+  methods: {}
 }
-
-window.addEventListener("load", function() {
-  const
-      logo = document.querySelector('img'),
-      homeButtonsWrapper = document.querySelector('.home__buttons-wrapper');
-
-  logo.style.opacity = '1';
-  logo.style.width = '30%';
-  logo.style.top = '30px';
-  logo.style.marginTop = '30px';
-
-  homeButtonsWrapper.style.visibility = 'visible';
-  homeButtonsWrapper.style.opacity = '1';
-  homeButtonsWrapper.style.bottom = '10%';
-});
 </script>
 
 <style scoped>
@@ -47,7 +52,7 @@ window.addEventListener("load", function() {
   background-size: cover;
 }
 
-img {
+#homeLogo {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -57,8 +62,8 @@ img {
   margin-top: 100px;
   max-width: 400px;
   width: 80%;
-  opacity: 0;
-  transition: opacity 1s, width 1s 1s, margin-top 1s 2s;
+  /*opacity: 0;*/
+  transition: opacity 1s, width 1s 0s, margin-top 1s .8s;
 }
 
 .home__buttons-wrapper {
@@ -67,19 +72,14 @@ img {
   left: 0;
   right: 0;
   margin: 0 auto;
-  transition: all 1s 2.2s;
+  transition: all 1s 1s;
 }
 
 button {
   display: block;
   margin: 10px auto;
   padding: 20px 40px;
-  background: rgba(0, 0, 0);
-  border: 2px solid #fff;
-  color: #fff;
   width: 250px;
-  cursor: pointer;
-  text-transform: uppercase;
   font-weight: 500;
 }
 </style>
