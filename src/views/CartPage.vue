@@ -2,8 +2,8 @@
   <div>
     <HeaderPart/>
     <div class="cart">
-      <div  class="empty-cart"
-            v-if="!inCart.length"
+      <div class="empty-cart"
+           v-if="!inCart.length"
       >
         <p>Положи сюда что-нибудь </p>
         <p>С пустой корзиной не ходят уважающие себя люди</p>
@@ -11,10 +11,10 @@
           <button class="btn">В каталог</button>
         </router-link>
       </div>
-      <div  v-else
-            v-for="(product, index) in inCart"
-            :key="index"
-            class="cart-item"
+      <div v-else
+           v-for="(product, index) in inCart"
+           :key="index"
+           class="cart-item"
       >
         <div class="item-wrapper">
           <div>
@@ -26,15 +26,32 @@
           <div class="item-info">
             <h3>{{ product.name }}</h3>
             <p class="description">{{ product.description }}</p>
-            <button class="btn">Изменить состав</button>
+            <button
+                class="btn"
+                @click="product.showIngredients = !product.showIngredients"
+            >
+              Изменить состав
+            </button>
+            <ul v-show="product.showIngredients"
+                class="ulIngredientList"
+            >
+              <label v-for="(ingredient, idx) in product.ingredients"
+                     v-bind:key="idx"
+              >
+                <li>
+                  <input type="checkbox" checked>
+                  {{ ingredient }}
+                </li>
+              </label>
+            </ul>
+
           </div>
           <div class="item-total-price">
             <h2>${{ product.price * productInCart(product.id) }}</h2>
-            <plusMinusPart  :product="product"
-                            @minusCount="minusCount"
-                            @plusCount="plusCount"
+            <plusMinusPart :product="product"
+                           @minusCount="minusCount"
+                           @plusCount="plusCount"
             />
-
           </div>
         </div>
 
@@ -58,7 +75,8 @@ export default {
   components: {HeaderPart, FooterPart, plusMinusPart},
   data() {
     return {
-      inCart: this.$store.state.inCart
+      inCart: this.$store.state.inCart,
+      productIngredients: true,
     }
   },
   methods: {
@@ -69,16 +87,14 @@ export default {
     },
 
     plusCount(id) {
-      this.PLUS_COUNT_IN_CART(id)
+      this.PLUS_COUNT_IN_CART(id);
     },
 
     productInCart(id) {
       return store.getters.productInCart(id)[0].count;
     }
   },
-  computed: {
-
-  }
+  computed: {}
 }
 </script>
 
@@ -133,6 +149,25 @@ export default {
 
 .count-wrapper {
   margin-bottom: 1rem;
+}
+
+.ulIngredientList {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+}
+
+.ulIngredientList > label {
+  margin: 10px;
+  margin-left: 0;
+  list-style-type: none;
+  padding: 3px 10px;
+  background-color: #252525;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+  user-select: none;
 }
 
 @media screen and (max-width: 500px) {

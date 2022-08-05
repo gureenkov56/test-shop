@@ -1,4 +1,4 @@
-import { createStore } from 'vuex';
+import {createStore} from 'vuex';
 
 function getProducts() {
   const products = [
@@ -11,6 +11,7 @@ function getProducts() {
       description: 'Мягкая булочка разогрета в микроволновке, да, но котлета то сделана с любовью. За это мы его и любим.',
       count: 1,
       canPayForEBalls: true,
+      showIngredients: false,
       category: 'Beef',
       ingredients: ['Верхняя булка', 'Салат', 'Сыр', 'Соленые огурцы', 'Котлета', 'Нижняя булка']
     },
@@ -23,6 +24,7 @@ function getProducts() {
       description: 'Когда ты №1, ты знаешь, что ты №1. И все вокруг знают. Они знают, что ты №1!',
       count: 1,
       canPayForEBalls: false,
+      showIngredients: false,
       category: 'Beef',
       ingredients: ['Верхняя булка']
     },
@@ -35,6 +37,7 @@ function getProducts() {
       description: 'Может содержать следы пороха и свинца (металл такой, не мясо)',
       count: 1,
       canPayForEBalls: false,
+      showIngredients: false,
       category: 'Black',
       ingredients: ['Верхняя булка']
     },
@@ -47,6 +50,7 @@ function getProducts() {
       description: 'Не забывай свои корни, помни - есть вещи на порядок выше. Слышишь?',
       count: 1,
       canPayForEBalls: false,
+      showIngredients: false,
       category: 'Black',
       ingredients: ['Верхняя булка']
     },
@@ -59,6 +63,7 @@ function getProducts() {
       description: 'Особо опасен, так как вызывает привыкание. Мы бы не советовали привыкать, но уже сами привыкли.',
       count: 1,
       canPayForEBalls: false,
+      showIngredients: false,
       category: 'Black',
       ingredients: ['Верхняя булка']
     },
@@ -71,6 +76,7 @@ function getProducts() {
       description: 'Порадуй свою бабушку. Большой черный босс, ягодный морс и картошечка помогут тебе набрать пару-тройку кило.',
       count: 1,
       canPayForEBalls: false,
+      showIngredients: false,
       category: 'Black',
       ingredients: ['Верхняя булка']
     },
@@ -83,6 +89,7 @@ function getProducts() {
       description: 'description',
       count: 1,
       canPayForEBalls: false,
+      showIngredients: false,
       category: 'Black',
       ingredients: ['Верхняя булка']
     },
@@ -95,6 +102,7 @@ function getProducts() {
       description: 'description',
       count: 1,
       canPayForEBalls: false,
+      showIngredients: false,
       category: 'Курица',
       ingredients: ['Верхняя булка']
     },
@@ -107,6 +115,7 @@ function getProducts() {
       description: 'description',
       count: 1,
       canPayForEBalls: false,
+      showIngredients: false,
       category: 'Курица',
       ingredients: ['Верхняя булка']
     },
@@ -119,6 +128,7 @@ function getProducts() {
       description: 'description',
       count: 1,
       canPayForEBalls: false,
+      showIngredients: false,
       category: 'Рыба',
       ingredients: ['Верхняя булка']
     },
@@ -131,6 +141,7 @@ function getProducts() {
       description: 'description',
       count: 1,
       canPayForEBalls: false,
+      showIngredients: false,
       category: 'Рыба',
       ingredients: ['Верхняя булка']
     },
@@ -143,6 +154,7 @@ function getProducts() {
       description: 'description',
       count: 1,
       canPayForEBalls: false,
+      showIngredients: false,
       category: 'Комбо',
       ingredients: ['Верхняя булка']
     },
@@ -155,6 +167,7 @@ function getProducts() {
       description: 'description',
       count: 1,
       canPayForEBalls: false,
+      showIngredients: false,
       category: 'Комбо',
       ingredients: ['Верхняя булка']
     },
@@ -167,6 +180,7 @@ function getProducts() {
       description: 'description',
       count: 1,
       canPayForEBalls: false,
+      showIngredients: false,
       category: 'Комбо',
       ingredients: ['Верхняя булка']
     },
@@ -179,6 +193,7 @@ function getProducts() {
       description: 'description',
       count: 1,
       canPayForEBalls: false,
+      showIngredients: false,
       category: 'Комбо',
       ingredients: ['Верхняя булка']
     },
@@ -191,6 +206,7 @@ function getProducts() {
       description: 'description',
       count: 1,
       canPayForEBalls: false,
+      showIngredients: false,
       category: 'Комбо',
       ingredients: ['Верхняя булка']
     },
@@ -203,6 +219,7 @@ function getProducts() {
       description: 'description',
       count: 1,
       canPayForEBalls: false,
+      showIngredients: false,
       category: 'Комбо',
       ingredients: ['Верхняя булка']
     },
@@ -215,6 +232,7 @@ function getProducts() {
       description: 'description',
       count: 1,
       canPayForEBalls: false,
+      showIngredients: false,
       category: 'Напитки',
       ingredients: ['Верхняя булка']
     },
@@ -227,6 +245,7 @@ function getProducts() {
       description: 'description',
       count: 1,
       canPayForEBalls: false,
+      showIngredients: false,
       category: 'Напитки',
       ingredients: ['Верхняя булка']
     },
@@ -239,13 +258,14 @@ function getProducts() {
       description: 'description',
       count: 1,
       canPayForEBalls: false,
+      showIngredients: false,
       category: 'Напитки',
       ingredients: ['Верхняя булка']
     }
   ]
 
   // server response imitation
-  const promise = new Promise( (resolve) => {
+  const promise = new Promise((resolve) => {
     setTimeout(() => {
       resolve(products);
     }, 500)
@@ -264,7 +284,7 @@ export default createStore({
       return state.inCart.filter(el => el.id === id);
     },
     totalCartPrice: state => {
-      if ( state.inCart.length ) {
+      if (state.inCart.length) {
         return state.inCart.reduce((total, current) => Number(total) + Number(current.price) * Number(current.count), 0);
       } else {
         return 0;
@@ -299,16 +319,15 @@ export default createStore({
     }
   },
   actions: {
-    async getProducts({ commit }) {
+    async getProducts({commit}) {
       try {
         let apiResult = await getProducts();
         commit('SET_PRODUCTS', apiResult);
         return 'DONE';
-      } catch(err) {
+      } catch (err) {
         console.error(err);
       }
     },
   },
-  modules: {
-  }
+  modules: {}
 })
