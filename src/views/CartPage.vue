@@ -36,7 +36,7 @@
                 class="ulIngredientList"
             >
               <label v-for="(ingredient, idx) in product.ingredients"
-                     v-bind:key="idx"
+                     :key="idx"
               >
                 <li>
                   <input type="checkbox" checked>
