@@ -39,7 +39,7 @@
                      :key="idx"
               >
                 <li>
-                  <input type="checkbox" checked>
+                  <input type="checkbox" checked @click="ingredientClick($event, product)" :data-ingredient="ingredient">
                   {{ ingredient }}
                 </li>
               </label>
@@ -80,7 +80,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['MINUS_COUNT_IN_CART', 'PLUS_COUNT_IN_CART']),
+    ...mapMutations(['MINUS_COUNT_IN_CART', 'PLUS_COUNT_IN_CART', 'ADD_EXCLUDED_INGREDIENT', 'REMOVE_EXCLUDED_INGREDIENT']),
 
     minusCount(id) {
       this.MINUS_COUNT_IN_CART(id);
@@ -92,6 +92,16 @@ export default {
 
     productInCart(id) {
       return store.getters.productInCart(id)[0].count;
+    },
+
+    ingredientClick(event, product) {
+      let ingredient = event.target.dataset.ingredient;
+
+      if (!event.target.checked) {
+        this.ADD_EXCLUDED_INGREDIENT([product, ingredient]);
+      } else {
+        this.REMOVE_EXCLUDED_INGREDIENT([product, ingredient]);
+      }
     }
   },
   computed: {}
@@ -131,9 +141,8 @@ export default {
   display: block;
   width: 85%;
   height: 1px;
-  margin: 0 auto;
+  margin: 1rem auto 0 auto;
   background-color: #343232;
-  margin-top: 1rem;
 }
 
 .item-image {

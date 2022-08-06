@@ -12,6 +12,7 @@ function getProducts() {
       count: 1,
       canPayForEBalls: true,
       showIngredients: false,
+      excludedIngredients: [],
       category: 'Beef',
       ingredients: ['Верхняя булка', 'Салат', 'Сыр', 'Соленые огурцы', 'Котлета', 'Нижняя булка']
     },
@@ -25,6 +26,7 @@ function getProducts() {
       count: 1,
       canPayForEBalls: false,
       showIngredients: false,
+      excludedIngredients: [],
       category: 'Beef',
       ingredients: ['Верхняя булка']
     },
@@ -38,6 +40,7 @@ function getProducts() {
       count: 1,
       canPayForEBalls: false,
       showIngredients: false,
+      excludedIngredients: [],
       category: 'Black',
       ingredients: ['Верхняя булка']
     },
@@ -51,6 +54,7 @@ function getProducts() {
       count: 1,
       canPayForEBalls: false,
       showIngredients: false,
+      excludedIngredients: [],
       category: 'Black',
       ingredients: ['Верхняя булка']
     },
@@ -64,6 +68,7 @@ function getProducts() {
       count: 1,
       canPayForEBalls: false,
       showIngredients: false,
+      excludedIngredients: [],
       category: 'Black',
       ingredients: ['Верхняя булка']
     },
@@ -77,6 +82,7 @@ function getProducts() {
       count: 1,
       canPayForEBalls: false,
       showIngredients: false,
+      excludedIngredients: [],
       category: 'Black',
       ingredients: ['Верхняя булка']
     },
@@ -90,6 +96,7 @@ function getProducts() {
       count: 1,
       canPayForEBalls: false,
       showIngredients: false,
+      excludedIngredients: [],
       category: 'Black',
       ingredients: ['Верхняя булка']
     },
@@ -103,6 +110,7 @@ function getProducts() {
       count: 1,
       canPayForEBalls: false,
       showIngredients: false,
+      excludedIngredients: [],
       category: 'Курица',
       ingredients: ['Верхняя булка']
     },
@@ -116,6 +124,7 @@ function getProducts() {
       count: 1,
       canPayForEBalls: false,
       showIngredients: false,
+      excludedIngredients: [],
       category: 'Курица',
       ingredients: ['Верхняя булка']
     },
@@ -129,6 +138,7 @@ function getProducts() {
       count: 1,
       canPayForEBalls: false,
       showIngredients: false,
+      excludedIngredients: [],
       category: 'Рыба',
       ingredients: ['Верхняя булка']
     },
@@ -142,6 +152,7 @@ function getProducts() {
       count: 1,
       canPayForEBalls: false,
       showIngredients: false,
+      excludedIngredients: [],
       category: 'Рыба',
       ingredients: ['Верхняя булка']
     },
@@ -155,6 +166,7 @@ function getProducts() {
       count: 1,
       canPayForEBalls: false,
       showIngredients: false,
+      excludedIngredients: [],
       category: 'Комбо',
       ingredients: ['Верхняя булка']
     },
@@ -168,6 +180,7 @@ function getProducts() {
       count: 1,
       canPayForEBalls: false,
       showIngredients: false,
+      excludedIngredients: [],
       category: 'Комбо',
       ingredients: ['Верхняя булка']
     },
@@ -181,6 +194,7 @@ function getProducts() {
       count: 1,
       canPayForEBalls: false,
       showIngredients: false,
+      excludedIngredients: [],
       category: 'Комбо',
       ingredients: ['Верхняя булка']
     },
@@ -194,6 +208,7 @@ function getProducts() {
       count: 1,
       canPayForEBalls: false,
       showIngredients: false,
+      excludedIngredients: [],
       category: 'Комбо',
       ingredients: ['Верхняя булка']
     },
@@ -207,6 +222,7 @@ function getProducts() {
       count: 1,
       canPayForEBalls: false,
       showIngredients: false,
+      excludedIngredients: [],
       category: 'Комбо',
       ingredients: ['Верхняя булка']
     },
@@ -220,6 +236,7 @@ function getProducts() {
       count: 1,
       canPayForEBalls: false,
       showIngredients: false,
+      excludedIngredients: [],
       category: 'Комбо',
       ingredients: ['Верхняя булка']
     },
@@ -233,6 +250,7 @@ function getProducts() {
       count: 1,
       canPayForEBalls: false,
       showIngredients: false,
+      excludedIngredients: [],
       category: 'Напитки',
       ingredients: ['Верхняя булка']
     },
@@ -246,6 +264,7 @@ function getProducts() {
       count: 1,
       canPayForEBalls: false,
       showIngredients: false,
+      excludedIngredients: [],
       category: 'Напитки',
       ingredients: ['Верхняя булка']
     },
@@ -259,6 +278,7 @@ function getProducts() {
       count: 1,
       canPayForEBalls: false,
       showIngredients: false,
+      excludedIngredients: [],
       category: 'Напитки',
       ingredients: ['Верхняя булка']
     }
@@ -316,6 +336,12 @@ export default createStore({
     },
     PLUS_COUNT_IN_CART(state, id) {
       state.inCart.find(el => el.id == id).count++;
+    },
+    ADD_EXCLUDED_INGREDIENT(state, params) {
+      params[0].excludedIngredients.push(params[1]);
+    },
+    REMOVE_EXCLUDED_INGREDIENT(state, params) {
+      params[0].excludedIngredients = params[0].excludedIngredients.filter(el => el != params[1]);
     }
   },
   actions: {
