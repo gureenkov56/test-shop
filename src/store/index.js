@@ -297,7 +297,8 @@ export default createStore({
   state: {
     noticeOnShowCaseWasClosed: false,
     products: [],
-    inCart: []
+    inCart: [],
+    orders: []
   },
   getters: {
     productInCart: state => id => {
@@ -342,6 +343,9 @@ export default createStore({
     },
     REMOVE_EXCLUDED_INGREDIENT(state, params) {
       params[0].excludedIngredients = params[0].excludedIngredients.filter(el => el != params[1]);
+    },
+    CLEAN_CART(state) {
+      state.inCart.length = 0;
     }
   },
   actions: {
