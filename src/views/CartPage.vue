@@ -148,7 +148,7 @@ export default {
 
 .cart {
   max-width: 800px;
-  margin: 0 auto 40px auto;
+  margin: 0 auto 230px auto;
   padding: 10px;
 }
 
@@ -214,11 +214,11 @@ export default {
   color: white;
   border: none;
   border-radius: 50px;
-  padding: 10px 20px;
+  padding: 20px 30px;
   cursor: pointer;
 
 
-  position: absolute;
+  position: fixed;
   bottom: 100px;
   width: 230px;
   left: 0;
@@ -276,6 +276,10 @@ export default {
 
   .description {
     margin-right: 0;
+  }
+
+  .ulIngredientList {
+    justify-content: space-around;
   }
 }
 </style>

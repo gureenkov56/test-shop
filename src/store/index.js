@@ -70,6 +70,7 @@ export default createStore({
     },
     CLEAN_CART(state) {
       state.inCart.length = 0;
+      sessionStorage.removeItem('inCart');
     },
   },
   actions: {
