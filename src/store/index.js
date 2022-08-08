@@ -1,5 +1,103 @@
 import {createStore} from 'vuex';
 
+export default createStore({
+  state: {
+    noticeOnShowCaseWasClosed: false,
+    products: [],
+    inCart: [],
+    orders: []
+  },
+  getters: {
+    productInCart: state => id => {
+      return state.inCart.filter(el => el.id == id);
+    },
+    productInState: state => id => {
+      return state.products.filter(el => el.id == id);
+    },
+    totalCartPrice: state => {
+      if (state.inCart.length) {
+        return state.inCart.reduce((total, current) => Number(total) + Number(current.price) * Number(current.count), 0);
+      } else {
+        return 0;
+      }
+    }
+  },
+  mutations: {
+    CLOSE_NOTICE_SHOWCASE(state) {
+      state.noticeOnShowCaseWasClosed = true
+    },
+    SET_PRODUCTS(state, info) {
+      state.products = info;
+    },
+    ADD_PRODUCT_TO_CART(state, id) {
+      let search = state.inCart.filter(el => el.id === id);
+      if (search.length) {
+        search[0].count++;
+      } else {
+        let product = state.products.filter(el => el.id == id)[0]
+        state.inCart.push(product);
+      }
+      if (sessionStorage.getItem('inCart')) {
+        let inCartId = sessionStorage.getItem('inCart');
+        inCartId += `${id},`;
+        sessionStorage.setItem('inCart', inCartId);
+      } else {
+        sessionStorage.setItem('inCart', `${id},`);
+      }
+    },
+    MINUS_COUNT_IN_CART(state, id) {
+      const idx = state.inCart.findIndex(el => el.id == id);
+      if (state.inCart[idx].count == 1) {
+        state.inCart.splice(idx, 1);
+      } else {
+        state.inCart[idx].count--;
+      }
+      let inCartId = sessionStorage.getItem('inCart');
+      inCartId = inCartId.replace(`${id},`, '');
+      sessionStorage.setItem('inCart', inCartId);
+    },
+    PLUS_COUNT_IN_CART(state, id) {
+      state.inCart.find(el => el.id == id).count++;
+      let inCartId = sessionStorage.getItem('inCart');
+      inCartId += `${id},`;
+      sessionStorage.setItem('inCart', inCartId);
+    },
+    ADD_EXCLUDED_INGREDIENT(state, params) {
+      params[0].excludedIngredients.push(params[1]);
+    },
+    REMOVE_EXCLUDED_INGREDIENT(state, params) {
+      params[0].excludedIngredients = params[0].excludedIngredients.filter(el => el != params[1]);
+    },
+    CLEAN_CART(state) {
+      state.inCart.length = 0;
+    },
+  },
+  actions: {
+    async getProducts({commit, getters}) {
+      try {
+        let apiResult = await getProducts();
+        commit('SET_PRODUCTS', apiResult);
+
+        if (sessionStorage.getItem('inCart')) {
+          let inCartSessionStorageArr = sessionStorage.getItem('inCart').split(',');
+          sessionStorage.removeItem('inCart');
+          inCartSessionStorageArr.forEach(id => {
+            let product = getters.productInState(id)[0];
+            if (product) {
+              commit('ADD_PRODUCT_TO_CART', id)
+            }
+          })
+        }
+
+        return 'DONE';
+      } catch (err) {
+        console.error(err);
+      }
+    },
+  },
+  modules: {}
+})
+
 function getProducts() {
   const products = [
     {
@@ -293,71 +391,3 @@ function getProducts() {
   return promise;
 }
 
-export default createStore({
-  state: {
-    noticeOnShowCaseWasClosed: false,
-    products: [],
-    inCart: [],
-    orders: []
-  },
-  getters: {
-    productInCart: state => id => {
-      return state.inCart.filter(el => el.id === id);
-    },
-    totalCartPrice: state => {
-      if (state.inCart.length) {
-        return state.inCart.reduce((total, current) => Number(total) + Number(current.price) * Number(current.count), 0);
-      } else {
-        return 0;
-      }
-    }
-  },
-  mutations: {
-    CLOSE_NOTICE_SHOWCASE(state) {
-      state.noticeOnShowCaseWasClosed = true
-    },
-    SET_PRODUCTS(state, info) {
-      state.products = info;
-    },
-    ADD_PRODUCT_TO_CART(state, product) {
-      let search = state.inCart.filter(el => el.id === product.id);
-      if (search.length) {
-        search[0].count++;
-      } else {
-        state.inCart.push(product);
-      }
-    },
-    MINUS_COUNT_IN_CART(state, id) {
-      const idx = state.inCart.findIndex(el => el.id == id);
-      if (state.inCart[idx].count == 1) {
-        state.inCart.splice(idx, 1);
-      } else {
-        state.inCart[idx].count--;
-      }
-    },
-    PLUS_COUNT_IN_CART(state, id) {
-      state.inCart.find(el => el.id == id).count++;
-    },
-    ADD_EXCLUDED_INGREDIENT(state, params) {
-      params[0].excludedIngredients.push(params[1]);
-    },
-    REMOVE_EXCLUDED_INGREDIENT(state, params) {
-      params[0].excludedIngredients = params[0].excludedIngredients.filter(el => el != params[1]);
-    },
-    CLEAN_CART(state) {
-      state.inCart.length = 0;
-    }
-  },
-  actions: {
-    async getProducts({commit}) {
-      try {
-        let apiResult = await getProducts();
-        commit('SET_PRODUCTS', apiResult);
-        return 'DONE';
-      } catch (err) {
-        console.error(err);
-      }
-    },
-  },
-  modules: {}
-})

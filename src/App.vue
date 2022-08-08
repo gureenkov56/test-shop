@@ -7,8 +7,15 @@
 </template>
 
 <script>
-export default {
+import {mapActions} from "vuex";
 
+export default {
+  methods: {
+    ...mapActions(['getProducts']),
+  },
+  created() {
+    this.getProducts()
+  }
 }
 </script>
 

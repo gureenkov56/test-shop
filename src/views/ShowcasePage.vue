@@ -36,7 +36,7 @@
 import HeaderPart from "@/views/parts/HeaderPart";
 import ShowcaseProduct from "@/components/ShowcaseProduct";
 import FooterPart from "@/views/parts/FooterPart";
-import {mapState, mapMutations, mapActions} from 'vuex';
+import {mapState, mapMutations} from 'vuex';
 
 export default {
   name: "ShowcasePage",
@@ -55,15 +55,11 @@ export default {
   },
   methods: {
     ...mapMutations(['CLOSE_NOTICE_SHOWCASE']),
-    ...mapActions(['getProducts']),
 
     closeNotice() {
       this.CLOSE_NOTICE_SHOWCASE();
       sessionStorage.setItem('showcaseNoticeWasClosed', 'yes');
     }
-  },
-  created() {
-    this.getProducts()
   },
   mounted() {
     if (sessionStorage.getItem('showcaseNoticeWasClosed')) {
