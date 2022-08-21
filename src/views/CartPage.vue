@@ -60,7 +60,7 @@
 
         </div>
 
-        <button class="make-order" @click="isOpenModal = true">
+        <button class="make-order" @click="createOrder">
           Оформить заказ
         </button>
       </div>
@@ -72,7 +72,7 @@
       <div class="modal-wrapper" v-show="isOpenModal">
         <div class="modal order-done-modal">
           <p>Ваш заказ:</p>
-          <h2>15505</h2>
+          <h2>{{ newOrderId }}</h2>
           <button class="order-done-btn btn" @click="closeModal">OK</button>
         </div>
       </div>
@@ -87,7 +87,6 @@ import plusMinusPart from "@/views/parts/plusMinusPart";
 import store from "@/store";
 import {mapMutations} from "vuex";
 
-
 export default {
   name: "CartPage",
   components: {HeaderPart, FooterPart, plusMinusPart},
@@ -96,6 +95,7 @@ export default {
       inCart: this.$store.state.inCart,
       productIngredients: true,
       isOpenModal: false,
+      newOrderId: null
     }
   },
   methods: {
@@ -104,7 +104,8 @@ export default {
       'PLUS_COUNT_IN_CART',
       'ADD_EXCLUDED_INGREDIENT',
       'REMOVE_EXCLUDED_INGREDIENT',
-      'CLEAN_CART'
+      'CLEAN_CART',
+      'ADD_ORDER'
     ]),
 
     minusCount(id) {
@@ -132,6 +133,13 @@ export default {
     closeModal() {
       this.isOpenModal = false;
       this.CLEAN_CART();
+      this.$router.push('/');
+    },
+
+    createOrder() {
+      this.ADD_ORDER();
+      this.isOpenModal = true;
+      this.newOrderId = this.$store.getters.lastOrderID;
     }
   },
   computed: {}

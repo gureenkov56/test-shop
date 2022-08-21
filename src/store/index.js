@@ -5,7 +5,8 @@ export default createStore({
     noticeOnShowCaseWasClosed: false,
     products: [],
     inCart: [],
-    orders: []
+    orders: [],
+    user: undefined
   },
   getters: {
     productInCart: state => id => {
@@ -20,6 +21,9 @@ export default createStore({
       } else {
         return 0;
       }
+    },
+    lastOrderID: state => {
+      return state.orders.length ? state.orders[state.orders.length - 1].id : 'null';
     }
   },
   mutations: {
@@ -72,6 +76,15 @@ export default createStore({
       state.inCart.length = 0;
       sessionStorage.removeItem('inCart');
     },
+    ADD_ORDER(state) {
+      let newID = state.orders.length ? state.orders[state.orders.length - 1].id + 1 : 1;
+      state.orders.push({
+        id: newID,
+        products: state.inCart,
+        paid: false,
+        status: 'In process...'
+      });
+    }
   },
   actions: {
     async getProducts({commit, getters}) {
