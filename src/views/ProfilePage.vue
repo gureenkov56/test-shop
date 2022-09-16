@@ -4,7 +4,7 @@
     <div class="profile-wrapper">
       <div v-if="!user" class="text-center">
         <h2>Вы не авторизованы</h2>
-        <p>Войдите, чтобы копить и тратить е-баллы</p>
+        <p>Войдите, чтобы копить и тратить баллы</p>
         <router-link to="/auth">
           <button class="btn">Войти</button>
         </router-link>
@@ -12,37 +12,37 @@
 
       <div v-else>
         <div class="text-center">
-          <img src="http://biographe.ru/wp-content/uploads/2018/01/2-103.jpg" alt="avatar" class="avatar">
-          <h2>Полковник Сандерс</h2>
-          <p>Е-баллов: 24</p>
+          <img :src="user.avatarSrc" alt="avatar" class="avatar">
+          <h2>{{ user.name }}</h2>
+          <!--          <p>Е-баллов: 24</p>-->
+          <button class="btn"
+                  @click="logoutMe">
+            Выйти
+          </button>
         </div>
 
-        <h3>Прошлые заказы</h3>
-        <div class="order">
-          <div class="order-header">
-            <h4>Номер заказа 34</h4>
-            <div class="status status-in-progress"></div>
-          </div>
-          <p>Сумма заказа 1230 р.</p>
-          <p>Получено 3 е-балла, потрачено 0.</p>
-        </div>
 
-        <div class="order">
-          <div class="order-header">
-            <h4>Номер заказа 34</h4>
-            <div class="status status-return"></div>
-          </div>
-          <p>Сумма заказа 1230 р.</p>
-          <p>Получено 3 е-балла, потрачено 0.</p>
-        </div>
 
-        <div class="order">
+        <h3>История заказов</h3>
+
+        <div class="order"
+             v-for="order in user.ordersHistory"
+             :key="order.id"
+        >
           <div class="order-header">
-            <h4>Номер заказа 34</h4>
-            <div class="status status-done"></div>
+            <h4>Номер заказа {{ order.id }}</h4>
+            <div class="status"
+                 :class="{
+                    'status-in-progress': order.status == 'wait',
+                    'status-return': order.status == 'canceled',
+                    'status-done': order.status == 'done'
+                 }"
+            >
+
+            </div>
           </div>
-          <p>Сумма заказа 1230 р.</p>
-          <p>Получено 3 е-балла, потрачено 0.</p>
+          <p>Сумма заказа {{ order.totalPrice }} р.</p>
+          <!--          <p>Получено 3 е-балла, потрачено 0.</p>-->
         </div>
       </div>
 
@@ -54,16 +54,21 @@
 <script>
 import FooterPart from "@/views/parts/FooterPart";
 import HeaderPart from "@/views/parts/HeaderPart";
+import {mapMutations, mapState} from "vuex";
 
 export default {
   name: 'ProfilePage',
   components: {
     FooterPart, HeaderPart
   },
-  computed: {
-    user() {
-      return this.$store.state.user
+  methods: {
+    ...mapMutations(['LOGOUT_USER']),
+    logoutMe() {
+      this.LOGOUT_USER();
     }
+  },
+  computed: {
+    ...mapState(['user'])
   }
 }
 </script>

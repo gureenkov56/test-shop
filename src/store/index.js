@@ -1,4 +1,5 @@
 import {createStore} from 'vuex';
+import router from '../router/index'
 
 export default createStore({
   state: {
@@ -6,6 +7,39 @@ export default createStore({
     products: [],
     inCart: [],
     orders: [],
+    userList: [
+      {
+        id: 1,
+        role: 'client',
+        login: 'user',
+        password: 'user',
+        name: 'Полковник Сандерс',
+        avatarSrc: 'http://biographe.ru/wp-content/uploads/2018/01/2-103.jpg',
+        ordersHistory: [
+          {
+            id: 999,
+            totalPrice: 1250,
+            status: 'wait'
+          },
+          {
+            id: 888,
+            totalPrice: 2100,
+            status: 'canceled'
+          },
+          {
+            id: 777,
+            totalPrice: 1300,
+            status: 'done'
+          }
+        ]
+      },
+      {
+        id: 2,
+        role: 'manager',
+        login: 'manager',
+        password: 'manager'
+      },
+    ],
     user: undefined
   },
   getters: {
@@ -76,6 +110,13 @@ export default createStore({
       state.inCart.length = 0;
       sessionStorage.removeItem('inCart');
     },
+    AUTH_USER(state, user) {
+      state.user = user;
+    },
+    LOGOUT_USER(state) {
+      state.user = null;
+      router.push('/');
+    }
   },
   actions: {
     async getProducts({commit, getters}) {
@@ -108,6 +149,20 @@ export default createStore({
         totalPrice: getters.totalCartPrice,
         status: 'In process...'
       });
+      if (state.user.role === 'client') {
+        state.user.ordersHistory.unshift({
+          id: newID,
+          totalPrice: getters.totalCartPrice,
+          status: 'wait'
+        })
+      }
+    },
+    loginSubmit({state, commit}, params) {
+      let auth = state.userList.find(user => user.login == params.login && user.password == params.password);
+      if (auth) {
+        commit('AUTH_USER', auth);
+        router.push('/profile');
+      }
     }
   },
   modules: {}

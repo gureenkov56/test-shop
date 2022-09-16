@@ -86,7 +86,7 @@ import HeaderPart from "@/views/parts/HeaderPart";
 import FooterPart from "@/views/parts/FooterPart";
 import PlusMinusBtn from "@/components/PlusMinusBtn";
 import store from "@/store";
-import {mapActions, mapGetters, mapMutations} from "vuex";
+import {mapActions, mapGetters, mapMutations, mapState} from "vuex";
 
 export default {
   name: "CartPage",
@@ -137,7 +137,12 @@ export default {
     closeModal() {
       this.isOpenModal = false;
       this.CLEAN_CART();
-      this.$router.push('/');
+      if (this.user) {
+        this.$router.push('/profile');
+      } else {
+        this.$router.push('/');
+      }
+
     },
 
     createOrder() {
@@ -147,7 +152,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['totalCartPrice'])
+    ...mapGetters(['totalCartPrice']),
+    ...mapState(['user'])
   }
 }
 </script>
