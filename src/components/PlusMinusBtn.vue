@@ -17,7 +17,7 @@
 import store from "@/store";
 
 export default {
-  name: "plusMinusPart",
+  name: "PlusMinusBtn",
   props: [
     'product',
   ],

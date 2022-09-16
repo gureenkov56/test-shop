@@ -27,12 +27,12 @@
             <div class="item-info">
               <h3>{{ product.name }}</h3>
               <p class="description">{{ product.description }}</p>
-              <button
-                  class="btn"
-                  @click="product.showIngredients = !product.showIngredients"
-              >
-                Изменить состав
-              </button>
+<!--              <button-->
+<!--                  class="btn"-->
+<!--                  @click="product.showIngredients = !product.showIngredients"-->
+<!--              >-->
+<!--                Изменить состав-->
+<!--              </button>-->
               <ul v-show="product.showIngredients"
                   class="ulIngredientList"
               >
@@ -50,7 +50,7 @@
             </div>
             <div class="item-total-price">
               <h2>${{ product.price * productInCart(product.id) }}</h2>
-              <plusMinusPart :product="product"
+              <PlusMinusBtn :product="product"
                              @minusCount="minusCount"
                              @plusCount="plusCount"
               />
@@ -72,7 +72,8 @@
       <div class="modal-wrapper" v-show="isOpenModal">
         <div class="modal order-done-modal">
           <p>Ваш заказ:</p>
-          <h2>{{ newOrderId }}</h2>
+          <h2>#{{ newOrderId }}</h2>
+          <p>Итого к оплате ${{ totalCartPrice }}</p>
           <button class="order-done-btn btn" @click="closeModal">OK</button>
         </div>
       </div>
@@ -83,13 +84,13 @@
 <script>
 import HeaderPart from "@/views/parts/HeaderPart";
 import FooterPart from "@/views/parts/FooterPart";
-import plusMinusPart from "@/views/parts/plusMinusPart";
+import PlusMinusBtn from "@/components/PlusMinusBtn";
 import store from "@/store";
-import {mapMutations} from "vuex";
+import {mapActions, mapGetters, mapMutations} from "vuex";
 
 export default {
   name: "CartPage",
-  components: {HeaderPart, FooterPart, plusMinusPart},
+  components: {HeaderPart, FooterPart, PlusMinusBtn},
   data() {
     return {
       inCart: this.$store.state.inCart,
@@ -105,7 +106,10 @@ export default {
       'ADD_EXCLUDED_INGREDIENT',
       'REMOVE_EXCLUDED_INGREDIENT',
       'CLEAN_CART',
-      'ADD_ORDER'
+    ]),
+
+    ...mapActions([
+        'createNewOrder'
     ]),
 
     minusCount(id) {
@@ -137,12 +141,14 @@ export default {
     },
 
     createOrder() {
-      this.ADD_ORDER();
+      this.createNewOrder();
       this.isOpenModal = true;
       this.newOrderId = this.$store.getters.lastOrderID;
     }
   },
-  computed: {}
+  computed: {
+    ...mapGetters(['totalCartPrice'])
+  }
 }
 </script>
 

@@ -24,7 +24,7 @@ export default createStore({
     },
     lastOrderID: state => {
       return state.orders.length ? state.orders[state.orders.length - 1].id : 'null';
-    }
+    },
   },
   mutations: {
     CLOSE_NOTICE_SHOWCASE(state) {
@@ -76,15 +76,6 @@ export default createStore({
       state.inCart.length = 0;
       sessionStorage.removeItem('inCart');
     },
-    ADD_ORDER(state) {
-      let newID = state.orders.length ? state.orders[state.orders.length - 1].id + 1 : 1;
-      state.orders.push({
-        id: newID,
-        products: state.inCart,
-        paid: false,
-        status: 'In process...'
-      });
-    }
   },
   actions: {
     async getProducts({commit, getters}) {
@@ -108,6 +99,16 @@ export default createStore({
         console.error(err);
       }
     },
+    createNewOrder({getters, state}) {
+      let newID = state.orders.length ? state.orders[state.orders.length - 1].id + 1 : 1;
+      state.orders.push({
+        id: newID,
+        products: state.inCart,
+        paid: false,
+        totalPrice: getters.totalCartPrice,
+        status: 'In process...'
+      });
+    }
   },
   modules: {}
 })

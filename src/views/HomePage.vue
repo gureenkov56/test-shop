@@ -7,7 +7,7 @@
         <router-link to="/showcase">
           <button class="btn">Заказать</button>
         </router-link>
-        <button class="btn">Бронь места</button>
+<!--        <button class="btn">Бронь места</button>-->
         <router-link to="/auth">
           <button class="btn">Войти</button>
         </router-link>
