@@ -39,7 +39,7 @@ export default {
     ...mapMutations(['ADD_PRODUCT_TO_CART', 'MINUS_COUNT_IN_CART', 'PLUS_COUNT_IN_CART']),
 
     addProduct(product) {
-      this.ADD_PRODUCT_TO_CART(product);
+      this.ADD_PRODUCT_TO_CART(product.id);
     },
 
     minusCount(id) {

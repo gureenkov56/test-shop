@@ -7,8 +7,15 @@
 </template>
 
 <script>
-export default {
+import {mapActions} from "vuex";
 
+export default {
+  methods: {
+    ...mapActions(['getProducts']),
+  },
+  created() {
+    this.getProducts()
+  }
 }
 </script>
 
@@ -114,6 +121,20 @@ a {
   color: white;
   height: 300px;
   line-height: 300px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+* {
+  color: white;
+}
+
+.wrapper {
+  max-width: 800px;
+  margin: 0 auto 100px auto;
+  padding: 0 10px;
 }
 
 </style>

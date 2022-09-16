@@ -8,7 +8,9 @@
           <button class="btn">Заказать</button>
         </router-link>
         <button class="btn">Бронь места</button>
-        <button class="btn">Войти</button>
+        <router-link to="/auth">
+          <button class="btn">Войти</button>
+        </router-link>
       </div>
     </div>
   </div>
@@ -24,7 +26,7 @@ export default {
         homeButtonsWrapper = this.$refs.buttonWrapper;
 
 
-    setTimeout( () => {
+    setTimeout(() => {
       logo.style.width = '30%';
       logo.style.top = '30px';
       logo.style.marginTop = '30px';

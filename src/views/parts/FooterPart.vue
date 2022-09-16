@@ -2,22 +2,24 @@
   <footer>
     <div class="footer__wrapper">
       <button class="backBtn" @click="$router.back()">
-          <img src="@/assets/images/svg/arrow-left.svg" alt="arrow-back">
+        <img src="@/assets/images/svg/arrow-left.svg" alt="arrow-back">
       </button>
       <div>
         <router-link to="/cart">
-          ЗАКАЗ: ${{totalCartPrice}}
+          ЗАКАЗ: ${{ totalCartPrice }}
         </router-link>
       </div>
-      <div>
-        <img src="@/assets/images/svg/user.svg" alt="user">
+      <div class="footer__user">
+        <router-link to="/profile">
+          <img src="@/assets/images/svg/user.svg" alt="user">
+        </router-link>
       </div>
     </div>
   </footer>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
 
 export default {
   name: "FooterPart",
@@ -61,5 +63,10 @@ a {
   background-color: #000;
   border: none;
   cursor: pointer;
+}
+
+.footer__user {
+  width: 22px;
+  align-self: center;
 }
 </style>
