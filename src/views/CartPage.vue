@@ -60,7 +60,7 @@
 
         </div>
 
-        <button class="make-order" @click="createOrder">
+        <button class="make-order" @click="createOrder" v-if="user.role !== 'manager'">
           Оформить заказ
         </button>
       </div>

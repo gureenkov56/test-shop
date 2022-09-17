@@ -6,7 +6,28 @@ export default createStore({
     noticeOnShowCaseWasClosed: false,
     products: [],
     inCart: [],
-    orders: [],
+    orders: [
+      {
+        id: 999,
+        totalPrice: 1250,
+        status: 'wait',
+        createdByUserId: 1,
+        products: [1]
+      },
+      {
+        id: 888,
+        totalPrice: 2100,
+        status: 'canceled',
+        createdByUserId: 1,
+        products: [2, 4]
+      },
+      {
+        id: 777,
+        totalPrice: 1300,
+        status: 'done',
+        products: [5]
+      }
+    ],
     userList: [
       {
         id: 1,
@@ -19,17 +40,23 @@ export default createStore({
           {
             id: 999,
             totalPrice: 1250,
-            status: 'wait'
+            status: 'wait',
+            products: [5]
+
           },
           {
             id: 888,
             totalPrice: 2100,
-            status: 'canceled'
+            status: 'canceled',
+            products: [5]
+
           },
           {
             id: 777,
             totalPrice: 1300,
-            status: 'done'
+            status: 'done',
+            products: [5]
+
           }
         ]
       },
@@ -37,7 +64,9 @@ export default createStore({
         id: 2,
         role: 'manager',
         login: 'manager',
-        password: 'manager'
+        password: 'manager',
+        name: 'Кейт Лебовски',
+        avatarSrc: 'https://www.qsrmagazine.com/sites/default/files/styles/story_page/public/story/takes-aim-big-labor-problem.jpg?itok=V1ySVMQ7',
       },
     ],
     user: undefined
@@ -59,6 +88,19 @@ export default createStore({
     lastOrderID: state => {
       return state.orders.length ? state.orders[state.orders.length - 1].id : 'null';
     },
+    activeOrder : state => {
+      return state.orders.filter(el => el.status === 'wait');
+    },
+    inactiveOrder: state => {
+      return state.orders.filter(el => el.status !== 'wait');
+    },
+    getProductsArrByIDArr: state => idArr => {
+      let res = [];
+      for (let idInArr of idArr) {
+        res.push(state.products.find(el => el.id === idInArr).name);
+      }
+      return res;
+    }
   },
   mutations: {
     CLOSE_NOTICE_SHOWCASE(state) {
@@ -116,6 +158,10 @@ export default createStore({
     LOGOUT_USER(state) {
       state.user = null;
       router.push('/');
+    },
+    CHANGE_ORDER_STATUS(state, params) {
+      let order = state.orders.find(ord => ord.id === params.id);
+      order.status = params.newStatus;
     }
   },
   actions: {
