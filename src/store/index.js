@@ -36,29 +36,7 @@ export default createStore({
         password: 'user',
         name: 'Полковник Сандерс',
         avatarSrc: 'http://biographe.ru/wp-content/uploads/2018/01/2-103.jpg',
-        ordersHistory: [
-          {
-            id: 999,
-            totalPrice: 1250,
-            status: 'wait',
-            products: [5]
-
-          },
-          {
-            id: 888,
-            totalPrice: 2100,
-            status: 'canceled',
-            products: [5]
-
-          },
-          {
-            id: 777,
-            totalPrice: 1300,
-            status: 'done',
-            products: [5]
-
-          }
-        ]
+        ordersHistory: [ 999, 888, 777 ]
       },
       {
         id: 2,
@@ -100,6 +78,9 @@ export default createStore({
         res.push(state.products.find(el => el.id === idInArr).name);
       }
       return res;
+    },
+    getOrderByIdArr: state => orderIdArr => {
+      return orderIdArr.map(el => state.orders.find(ord => ord.id == el));
     }
   },
   mutations: {
@@ -198,11 +179,7 @@ export default createStore({
         status: 'wait'
       });
       if (state.user && state.user.role === 'client') {
-        state.user.ordersHistory.unshift({
-          id: newID,
-          totalPrice: getters.totalCartPrice,
-          status: 'wait'
-        })
+        state.user.ordersHistory.unshift(newID);
       }
     },
     loginSubmit({state, commit}, params) {
@@ -213,7 +190,6 @@ export default createStore({
       }
     }
   },
-  modules: {}
 })
 
 function getProducts() {

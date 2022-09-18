@@ -25,7 +25,7 @@
         <div v-if="user.role === 'client' ">
           <h3>История заказов</h3>
           <div class="order"
-               v-for="order in user.ordersHistory"
+               v-for="order in getOrderByIdArr(user.ordersHistory)"
                :key="order.id"
           >
             <div class="order-header">
@@ -68,7 +68,7 @@
             <p>
               <span>Состав заказа: </span>
               <span v-for="(prod, idx) in getProductsArrByIDArr(order.products)"
-                :key="idx"
+                    :key="idx"
               >
                 <span v-if="idx > 0">, </span>
                 {{ prod }}
@@ -145,7 +145,12 @@ export default {
   },
   computed: {
     ...mapState(['user']),
-    ...mapGetters(['activeOrder', 'inactiveOrder', 'getProductsArrByIDArr'])
+    ...mapGetters([
+      'activeOrder',
+      'inactiveOrder',
+      'getProductsArrByIDArr',
+      'getOrderByIdArr'
+    ])
   }
 }
 </script>
