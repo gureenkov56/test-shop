@@ -1,11 +1,52 @@
 import {createStore} from 'vuex';
+import router from '../router/index'
 
 export default createStore({
   state: {
     noticeOnShowCaseWasClosed: false,
     products: [],
     inCart: [],
-    orders: [],
+    orders: [
+      {
+        id: 999,
+        totalPrice: 1250,
+        status: 'wait',
+        createdByUserId: 1,
+        products: [1]
+      },
+      {
+        id: 888,
+        totalPrice: 2100,
+        status: 'canceled',
+        createdByUserId: 1,
+        products: [2, 4]
+      },
+      {
+        id: 777,
+        totalPrice: 1300,
+        status: 'done',
+        products: [5]
+      }
+    ],
+    userList: [
+      {
+        id: 1,
+        role: 'client',
+        login: 'user',
+        password: 'user',
+        name: 'Полковник Сандерс',
+        avatarSrc: 'http://biographe.ru/wp-content/uploads/2018/01/2-103.jpg',
+        ordersHistory: [ 999, 888, 777 ]
+      },
+      {
+        id: 2,
+        role: 'manager',
+        login: 'manager',
+        password: 'manager',
+        name: 'Кейт Лебовски',
+        avatarSrc: 'https://www.qsrmagazine.com/sites/default/files/styles/story_page/public/story/takes-aim-big-labor-problem.jpg?itok=V1ySVMQ7',
+      },
+    ],
     user: undefined
   },
   getters: {
@@ -24,6 +65,22 @@ export default createStore({
     },
     lastOrderID: state => {
       return state.orders.length ? state.orders[state.orders.length - 1].id : 'null';
+    },
+    activeOrder : state => {
+      return state.orders.filter(el => el.status === 'wait');
+    },
+    inactiveOrder: state => {
+      return state.orders.filter(el => el.status !== 'wait');
+    },
+    getProductsArrByIDArr: state => idArr => {
+      let res = [];
+      for (let idInArr of idArr) {
+        res.push(state.products.find(el => el.id === idInArr).name);
+      }
+      return res;
+    },
+    getOrderByIdArr: state => orderIdArr => {
+      return orderIdArr.map(el => state.orders.find(ord => ord.id == el));
     }
   },
   mutations: {
@@ -76,14 +133,16 @@ export default createStore({
       state.inCart.length = 0;
       sessionStorage.removeItem('inCart');
     },
-    ADD_ORDER(state) {
-      let newID = state.orders.length ? state.orders[state.orders.length - 1].id + 1 : 1;
-      state.orders.push({
-        id: newID,
-        products: state.inCart,
-        paid: false,
-        status: 'In process...'
-      });
+    AUTH_USER(state, user) {
+      state.user = user;
+    },
+    LOGOUT_USER(state) {
+      state.user = null;
+      router.push('/');
+    },
+    CHANGE_ORDER_STATUS(state, params) {
+      let order = state.orders.find(ord => ord.id === params.id);
+      order.status = params.newStatus;
     }
   },
   actions: {
@@ -108,8 +167,29 @@ export default createStore({
         console.error(err);
       }
     },
+    createNewOrder({getters, state}) {
+      let newID = state.orders.length ? state.orders[state.orders.length - 1].id + 1 : 1;
+
+
+      state.orders.unshift({
+        id: newID,
+        products: state.inCart.map(el => el.id),
+        paid: false,
+        totalPrice: getters.totalCartPrice,
+        status: 'wait'
+      });
+      if (state.user && state.user.role === 'client') {
+        state.user.ordersHistory.unshift(newID);
+      }
+    },
+    loginSubmit({state, commit}, params) {
+      let auth = state.userList.find(user => user.login == params.login && user.password == params.password);
+      if (auth) {
+        commit('AUTH_USER', auth);
+        router.push('/profile');
+      }
+    }
   },
-  modules: {}
 })
 
 function getProducts() {

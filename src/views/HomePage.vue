@@ -7,8 +7,11 @@
         <router-link to="/showcase">
           <button class="btn">Заказать</button>
         </router-link>
-        <button class="btn">Бронь места</button>
-        <router-link to="/auth">
+<!--        <button class="btn">Бронь места</button>-->
+        <router-link v-if="user" to="/profile">
+          <button class="btn">Профиль</button>
+        </router-link>
+        <router-link v-else to="/auth">
           <button class="btn">Войти</button>
         </router-link>
       </div>
@@ -17,6 +20,8 @@
 </template>
 
 <script>
+import {mapState} from "vuex";
+
 export default {
   name: "HomePage",
 
@@ -38,7 +43,9 @@ export default {
     }, 0)
 
   },
-  methods: {}
+  computed: {
+    ...mapState(['user'])
+  }
 }
 </script>
 

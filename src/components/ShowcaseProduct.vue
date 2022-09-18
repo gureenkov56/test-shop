@@ -11,7 +11,7 @@
       BUY ${{ product.price }}
     </button>
 
-    <plusMinusPart
+    <PlusMinusBtn
         v-else
         :product="product"
         @minusCount="minusCount"
@@ -29,11 +29,11 @@
 
 <script>
 import {mapMutations, mapGetters} from "vuex";
-import plusMinusPart from "@/views/parts/plusMinusPart";
+import PlusMinusBtn from "@/components/PlusMinusBtn";
 
 export default {
   name: "ShowcaseProduct",
-  components: {plusMinusPart},
+  components: {PlusMinusBtn},
   props: ['product', 'index'],
   methods: {
     ...mapMutations(['ADD_PRODUCT_TO_CART', 'MINUS_COUNT_IN_CART', 'PLUS_COUNT_IN_CART']),

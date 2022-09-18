@@ -7,14 +7,20 @@
         <h3 class="text-center">Авторизация</h3>
         <form>
           <div>
-            <input type="text" name="login" id="login" placeholder="Логин (user или manager)">
+            <input type="text"
+                   v-model.trim="loginInput"
+                   placeholder="Логин (user или manager)"
+            >
           </div>
 
           <div>
-            <input type="password" name="password" id="password" placeholder="Пароль (user или manager)">
+            <input type="password"
+                   placeholder="Пароль (user или manager)"
+                   v-model.trim="passwordInput"
+            >
           </div>
 
-          <button class="btn">Войти</button>
+          <button class="btn" @click.prevent="authUser">Войти</button>
 
         </form>
         <div class="reg-block">
@@ -53,6 +59,8 @@
 <script>
 import HeaderPart from "@/views/parts/HeaderPart";
 import FooterPart from "@/views/parts/FooterPart";
+import {mapActions, mapState} from "vuex";
+import router from "@/router";
 
 export default {
   name: "LoginPage",
@@ -61,8 +69,26 @@ export default {
   },
   data() {
     return {
-      isShowAuthBlock: true
+      isShowAuthBlock: true,
+      loginInput: '',
+      passwordInput: ''
     }
+  },
+  methods: {
+    ...mapActions(['loginSubmit']),
+    authUser: function(){
+      let params = {
+        login: this.loginInput,
+        password: this.passwordInput
+      };
+      this.loginSubmit(params);
+    }
+  },
+  computed: {
+    ...mapState(['user'])
+  },
+  beforeMount() {
+    if(this.user) router.push('/');
   }
 }
 </script>

@@ -3,13 +3,13 @@
     <HeaderPart/>
     <div class="shocasePage__wrapper">
 
-      <div class="notice" :class="{'hide': showNotice}">
-        <div class="notice__inner">
-          <h5>Регистрируйся!</h5>
-          <p>Всем новым пользователям даём по е-баллу</p>
-        </div>
-        <button @click="closeNotice">×</button>
-      </div>
+<!--      <div class="notice" :class="{'hide': showNotice}">-->
+<!--        <div class="notice__inner">-->
+<!--          <h5>Регистрируйся!</h5>-->
+<!--          <p>Всем новым пользователям даём по баллу</p>-->
+<!--        </div>-->
+<!--        <button @click="closeNotice">×</button>-->
+<!--      </div>-->
 
       <transition name="fade" mode="out-in">
         <p v-if="!products.length" class="loading" ref="loading">
