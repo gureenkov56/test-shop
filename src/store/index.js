@@ -188,14 +188,16 @@ export default createStore({
     },
     createNewOrder({getters, state}) {
       let newID = state.orders.length ? state.orders[state.orders.length - 1].id + 1 : 1;
-      state.orders.push({
+
+
+      state.orders.unshift({
         id: newID,
-        products: state.inCart,
+        products: state.inCart.map(el => el.id),
         paid: false,
         totalPrice: getters.totalCartPrice,
-        status: 'In process...'
+        status: 'wait'
       });
-      if (state.user.role === 'client') {
+      if (state.user && state.user.role === 'client') {
         state.user.ordersHistory.unshift({
           id: newID,
           totalPrice: getters.totalCartPrice,

@@ -70,6 +70,7 @@
               <span v-for="(prod, idx) in getProductsArrByIDArr(order.products)"
                 :key="idx"
               >
+                <span v-if="idx > 0">, </span>
                 {{ prod }}
               </span>
             </p>
