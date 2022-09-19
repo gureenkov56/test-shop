@@ -9,23 +9,30 @@ import LoginPage from "@/views/parts/LoginPage";
 const routes = [
   {
     path: '/',
-    component: HomePage
+    component: HomePage,
+    meta: { title: 'Burger Shop' }
   },
   {
     path: '/showcase',
-    component: ShowcasePage
+    component: ShowcasePage,
+    meta: { title: 'Меню' }
   },
   {
     path: '/cart',
-    component: CartPage
+    component: CartPage,
+    meta: { title: 'Корзина' }
+
   },
   {
     path: '/profile',
-    component: ProfilePage
+    component: ProfilePage,
+    meta: { title: 'Профиль' }
+
   },
   {
     path: '/auth',
-    component: LoginPage
+    component: LoginPage,
+    meta: { title: 'Авторизация' }
   }
 ]
 
@@ -33,5 +40,11 @@ const router = createRouter({
   history: createWebHistory(),
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title
+
+  next()
+});
 
 export default router
