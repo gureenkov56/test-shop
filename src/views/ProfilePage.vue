@@ -49,7 +49,7 @@
                 {{ prod }}
               </span>
             </p>
-            <p>Сумма заказа {{ order.totalPrice }} р.</p>
+            <p>Сумма заказа ${{ order.totalPrice }}</p>
             <!--          <p>Получено 3 е-балла, потрачено 0.</p>-->
           </div>
         </div>
@@ -74,7 +74,7 @@
                 {{ prod }}
               </span>
             </p>
-            <p>Сумма заказа {{ order.totalPrice }} р.</p>
+            <p>Сумма заказа ${{ order.totalPrice }}</p>
             <!--          <p>Получено 3 е-балла, потрачено 0.</p>-->
             <h5>Изменить статус</h5>
             <button class="btn status status-return"
@@ -108,7 +108,7 @@
                 {{ prod }}
               </span>
             </p>
-            <p>Сумма заказа {{ order.totalPrice }} р.</p>
+            <p>Сумма заказа ${{ order.totalPrice }}</p>
             <!--          <p>Получено 3 е-балла, потрачено 0.</p>-->
           </div>
 

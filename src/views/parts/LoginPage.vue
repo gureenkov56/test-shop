@@ -23,10 +23,10 @@
           <button class="btn" @click.prevent="authUser">Войти</button>
 
         </form>
-        <div class="reg-block">
-          <p>Или регистрация, если еще не</p>
-          <button class="btn" @click="isShowAuthBlock = false">Регистрация</button>
-        </div>
+<!--        <div class="reg-block">-->
+<!--          <p>Или регистрация, если еще не</p>-->
+<!--          <button class="btn" @click="isShowAuthBlock = false">Регистрация</button>-->
+<!--        </div>-->
 
       </div>
 

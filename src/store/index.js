@@ -6,24 +6,25 @@ export default createStore({
     noticeOnShowCaseWasClosed: false,
     products: [],
     inCart: [],
+    lastOrderID: 999,
     orders: [
       {
         id: 999,
-        totalPrice: 1250,
+        totalPrice: 45,
         status: 'wait',
         createdByUserId: 1,
         products: [1]
       },
       {
         id: 888,
-        totalPrice: 2100,
+        totalPrice: 89,
         status: 'canceled',
         createdByUserId: 1,
         products: [2, 4]
       },
       {
         id: 777,
-        totalPrice: 1300,
+        totalPrice: 75,
         status: 'done',
         products: [5]
       }
@@ -143,6 +144,9 @@ export default createStore({
     CHANGE_ORDER_STATUS(state, params) {
       let order = state.orders.find(ord => ord.id === params.id);
       order.status = params.newStatus;
+    },
+    LAST_ORDER_ID_PLUS(state) {
+      state.lastOrderID++;
     }
   },
   actions: {
@@ -167,9 +171,9 @@ export default createStore({
         console.error(err);
       }
     },
-    createNewOrder({getters, state}) {
-      let newID = state.orders.length ? state.orders[state.orders.length - 1].id + 1 : 1;
-
+    createNewOrder({getters, state, commit}) {
+      commit('LAST_ORDER_ID_PLUS');
+      let newID = state.lastOrderID;
 
       state.orders.unshift({
         id: newID,

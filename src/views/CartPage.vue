@@ -148,7 +148,7 @@ export default {
     createOrder() {
       this.createNewOrder();
       this.isOpenModal = true;
-      this.newOrderId = this.$store.getters.lastOrderID;
+      this.newOrderId = this.$store.state.lastOrderID;
     }
   },
   computed: {
